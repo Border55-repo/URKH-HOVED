@@ -7,6 +7,7 @@ URKH er et enkelt møteverktøy for Ullensaker Røde Kors Hjelpekorps, laget av 
 
 ## Dette kan appen
 
+- Lage lokalrådsreferat med eller uten møteopptak.
 - Ta opp lokalrådsmøter med tydelig samtykkebekreftelse.
 - Markere notater, vedtak og oppgaver under møtet.
 - Stoppe opptaket og automatisk gjøre det om til tekst lokalt på enheten.
