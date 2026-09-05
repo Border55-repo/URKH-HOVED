@@ -1,12 +1,15 @@
 name: Bygg URKH-apper
+
 on:
   workflow_dispatch:
   push:
     branches: ['main']
+
 permissions:
   contents: write
+
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,5 +31,169 @@ jobs:
           files: |
             URKH-Android.apk
             URKH-iPhone-kildekode.zip
-          name: URKH ${{ steps.version.outputs.version }}
-          body: Ny URKH-versjon med møteinnkalling, møtereferat, Korpsbrev, Android-app og iPhone-støtte. Laget av Julian Nordli.
+          name: URKH v${{ steps.version.outputs.version }}
+          body_path: RELEASE_NOTES.md
+
+  rydd-releasehistorikk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const releases = [
+              {
+                tag: 'v1.0.0',
+                name: 'RødeReferat v1.0.0',
+                body: `Første versjon av RødeReferat.
+
+### Nytt i denne versjonen
+- Registrering av møtedata og saksliste.
+- Møteopptak med markering av notat, vedtak og oppgave.
+- Lokal tale-til-tekst og redigerbart referatutkast.
+- Standard referatmal med kontrollpunkter før PDF-eksport.
+- Lagring og åpning av møteprosjekter.
+- Første Android-APK.
+
+### Nedlasting
+Last ned RodeReferat-Android.apk under Assets. Appen trenger mikrofontillatelse ved møteopptak.
+
+Referatet skal alltid kontrolleres før det brukes eller eksporteres.
+
+Laget av Julian Nordli.`
+              },
+              {
+                tag: 'v1.1.0',
+                name: 'RødeReferat v1.1.0',
+                body: `### Nytt i denne versjonen
+- Automatisert flyten fra møteopptak til referatutkast.
+- Når opptaket stoppes, starter transkripsjonen automatisk.
+- Referatutkastet åpnes automatisk når transkripsjonen er ferdig.
+- Manuell kontroll er fortsatt påkrevd før PDF-eksport.
+- Oppdatert Android-APK.
+
+### Nedlasting
+Last ned RodeReferat-Android.apk under Assets. Appen trenger mikrofontillatelse ved møteopptak.
+
+Laget av Julian Nordli.`
+              },
+              {
+                tag: 'v1.2.0',
+                name: 'RødeReferat v1.2.0',
+                body: `### Nytt i denne versjonen
+- Valgfritt Blålys-tema med mørk blå bakgrunn og høy kontrast.
+- Temavalget huskes på enheten.
+- Oppdatert Android-APK.
+
+### Nedlasting
+Last ned RodeReferat-Android.apk under Assets. Appen trenger mikrofontillatelse ved møteopptak.
+
+Laget av Julian Nordli.`
+              },
+              {
+                tag: 'v2.1.0',
+                name: 'URKH v2.1.0',
+                body: `### Nytt i denne versjonen
+- Appnavnet ble endret fra RødeReferat til URKH.
+- GitHub-prosjektet fikk navnet URKH-HOVED.
+- Ny hovedside med valg mellom Møtereferat og Korpsbrev.
+- Direkte tilgang til Android-nedlasting.
+- Møtereferat, automatisk transkripsjon, Blålys-tema og PDF ble videreført.
+
+### Nedlasting
+Last ned URKH-Android.apk under Assets. Appen trenger mikrofontillatelse ved møteopptak.
+
+Laget av Julian Nordli.`
+              },
+              {
+                tag: 'v2.1.1',
+                name: 'URKH v2.1.1',
+                body: `### Rettet i denne versjonen
+- Korpsbrev åpner riktig fra URKH-hovedsiden.
+- GitHub Pages ble aktivert for Korpsbrev.
+- En korrekt startside ble lagt til i Korpsbrev-prosjektet.
+- Oppdatert Android-APK.
+
+### Nedlasting
+Last ned URKH-Android.apk under Assets.
+
+Laget av Julian Nordli.`
+              },
+              {
+                tag: 'v2.1.2',
+                name: 'URKH v2.1.2',
+                body: `### Rettet i denne versjonen
+- Skjulte det tekniske «Choose File»-feltet som ved en feil ble vist nederst.
+- «Åpne prosjekt» fungerer fortsatt og åpner filvelgeren først når knappen trykkes.
+- Oppdatert Android-APK.
+
+### Nedlasting
+Last ned URKH-Android.apk under Assets.
+
+Laget av Julian Nordli.`
+              },
+              {
+                tag: 'v2.2.0',
+                name: 'URKH v2.2.0',
+                body: `### Nytt i denne versjonen
+- Lokalrådsreferat kan lages uten møteopptak.
+- Ny knapp «Lag referat uten opptak».
+- Diskusjon, vedtak, ansvarlig og frist kan fylles direkte.
+- Samme kontrollpunkter og PDF-eksport som automatiske referater.
+- Oppdatert Android-APK.
+
+### Nedlasting
+Last ned URKH-Android.apk under Assets.
+
+Laget av Julian Nordli.`
+              },
+              {
+                tag: 'v2.3.0',
+                name: 'URKH v2.3.0',
+                body: `### Nytt i denne versjonen
+- URKH kan installeres fra Safari som nettapp på iPhone og iPad.
+- Eget Apple-ikon og installasjonsveiledning.
+- iOS-kildeprosjekt for Xcode lagt ved.
+- Android-APK videreført.
+
+### Nedlasting
+- URKH-Android.apk – installasjonsfil for Android.
+- URKH-iPhone-kildekode.zip – kildekode for bygging i Xcode. Ferdig IPA krever Apples signering.
+
+Laget av Julian Nordli.`
+              },
+              {
+                tag: 'v2.4.0',
+                name: 'URKH v2.4.0',
+                body: `### Nytt i denne versjonen
+- Egen modul for møteinnkalling.
+- Felter for møtetittel, dato, tid, sted, mottakere, innledning, saksliste, praktisk informasjon, svarfrist og kontaktperson.
+- Automatisk forhåndsvisning og lagring av siste utkast.
+- Kopiering som tekst og eksport til PDF.
+- GitHub Releases opprettes nå automatisk ved nye versjoner.
+- Android-APK og iPhone-kildepakke bygges og legges ved automatisk.
+
+### Nedlasting
+- URKH-Android.apk – installasjonsfil for Android.
+- URKH-iPhone-kildekode.zip – kildekode for bygging i Xcode. Ferdig IPA krever Apples signering.
+
+Appen trenger mikrofontillatelse ved møteopptak. Referater skal alltid kontrolleres før de brukes eller eksporteres.
+
+Laget av Julian Nordli.`
+              }
+            ];
+
+            for (const item of releases) {
+              const { data: release } = await github.rest.repos.getReleaseByTag({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag: item.tag
+              });
+              await github.rest.repos.updateRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: release.id,
+                name: item.name,
+                body: item.body
+              });
+              core.info(`Oppdatert ${item.tag}`);
+            }
