@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
-        web.loadUrl("https://border55-repo.github.io/RodeReferat/");
+        web.loadUrl("https://border55-repo.github.io/URKH-HOVED/");
     }
 
     @Override public void onRequestPermissionsResult(int code, String[] permissions, int[] results) {
@@ -81,7 +81,7 @@ public class MainActivity extends Activity {
         @JavascriptInterface public void printPage() {
             runOnUiThread(() -> {
                 PrintManager pm = (PrintManager)getSystemService(PRINT_SERVICE);
-                pm.print("RødeReferat", web.createPrintDocumentAdapter("RødeReferat"), new PrintAttributes.Builder().build());
+                pm.print("URKH", web.createPrintDocumentAdapter("URKH"), new PrintAttributes.Builder().build());
             });
         }
 
@@ -93,10 +93,10 @@ public class MainActivity extends Activity {
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.Downloads.DISPLAY_NAME, safeName);
                 values.put(MediaStore.Downloads.MIME_TYPE, dataUrl.substring(5, dataUrl.indexOf(';')));
-                values.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/RodeReferat");
+                values.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/URKH");
                 Uri uri = getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
                 try (OutputStream stream = getContentResolver().openOutputStream(uri)) { stream.write(bytes); }
-                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Lagret i Nedlastinger/RodeReferat: " + safeName, Toast.LENGTH_LONG).show());
+                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Lagret i Nedlastinger/URKH: " + safeName, Toast.LENGTH_LONG).show());
             } catch (Exception ex) {
                 runOnUiThread(() -> Toast.makeText(MainActivity.this, "Filen kunne ikke lagres.", Toast.LENGTH_LONG).show());
             }

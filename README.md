@@ -1,6 +1,6 @@
-# RødeReferat
+# URKH
 
-RødeReferat er et enkelt møteverktøy for Ullensaker Røde Kors Hjelpekorps, laget av **Julian Nordli**.
+URKH er et enkelt møteverktøy for Ullensaker Røde Kors Hjelpekorps, laget av **Julian Nordli**.
 
 ## Dette kan appen
 
