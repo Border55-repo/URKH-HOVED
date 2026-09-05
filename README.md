@@ -12,6 +12,7 @@ RødeReferat er et enkelt møteverktøy for Ullensaker Røde Kors Hjelpekorps, l
 - Eksportere ferdig referat til PDF.
 - Lagre og åpne møteprosjekter.
 - Installeres på Android, Windows og Mac.
+- Har et valgfritt Blålys-tema som huskes automatisk.
 
 ## Bruk
 
