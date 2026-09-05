@@ -1,0 +1,16 @@
+name: URKH
+options:
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  URKH:
+    type: application
+    platform: iOS
+    sources: [URKH]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: no.ullensakerrodekors.urkh
+        PRODUCT_NAME: URKH
+        SWIFT_VERSION: 5.0
+        INFOPLIST_FILE: URKH/Info.plist
+        CODE_SIGN_STYLE: Automatic
