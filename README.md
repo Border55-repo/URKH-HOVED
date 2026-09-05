@@ -1,5 +1,8 @@
 # URKH
 
+- [Åpne URKH](https://border55-repo.github.io/URKH-HOVED/)
+- [Last ned nyeste Android-APK](https://github.com/Border55-repo/URKH-HOVED/releases/latest/download/URKH-Android.apk)
+
 URKH er et enkelt møteverktøy for Ullensaker Røde Kors Hjelpekorps, laget av **Julian Nordli**.
 
 ## Dette kan appen
