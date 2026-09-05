@@ -6,8 +6,8 @@ RødeReferat er et enkelt møteverktøy for Ullensaker Røde Kors Hjelpekorps, l
 
 - Ta opp lokalrådsmøter med tydelig samtykkebekreftelse.
 - Markere notater, vedtak og oppgaver under møtet.
-- Gjøre opptak om til tekst lokalt på enheten.
-- Lage et redigerbart utkast i en fast referatmal.
+- Stoppe opptaket og automatisk gjøre det om til tekst lokalt på enheten.
+- Automatisk lage et redigerbart utkast i en fast referatmal.
 - Kreve manuell kontroll før referatet kan eksporteres.
 - Eksportere ferdig referat til PDF.
 - Lagre og åpne møteprosjekter.
