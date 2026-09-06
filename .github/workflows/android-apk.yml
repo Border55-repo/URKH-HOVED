@@ -2,26 +2,40 @@ name: Bygg URKH-apper
 
 on:
   workflow_dispatch:
-  push:
-    branches: ['main']
+    inputs:
+      confirm_release:
+        description: Skriv RELEASE for å opprette en ny utgivelse
+        required: true
+        type: string
 
 permissions:
   contents: write
 
 jobs:
   release:
+    if: ${{ inputs.confirm_release == 'RELEASE' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - id: version
-        run: echo "version=$(cat VERSION)" >> "$GITHUB_OUTPUT"
+        shell: bash
+        run: echo "version=$(tr -d '[:space:]' < VERSION)" >> "$GITHUB_OUTPUT"
+      - name: Stopp hvis versjonen allerede er publisert
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if gh release view "v${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
+            echo "Versjonen finnes allerede. Historiske releases overskrives aldri."
+            exit 1
+          fi
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: "17"
       - uses: gradle/actions/setup-gradle@v6
         with:
-          gradle-version: '8.10.2'
+          gradle-version: "9.6.0"
       - run: gradle -p android assembleDebug
       - run: cp android/app/build/outputs/apk/debug/app-debug.apk URKH-Android.apk
       - run: zip -r URKH-iPhone-kildekode.zip ios
@@ -33,26 +47,3 @@ jobs:
             URKH-iPhone-kildekode.zip
           name: URKH v${{ steps.version.outputs.version }}
           body_path: RELEASE_NOTES.md
-
-  rydd-releasehistorikk:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v9
-        with:
-          script: |
-            const releases = [{"tag":"v1.0.0","name":"RødeReferat v1.0.0","body":"Første versjon av RødeReferat.\n\n### Nytt i denne versjonen\n- Registrering av møtedata og saksliste.\n- Møteopptak med markering av notat, vedtak og oppgave.\n- Lokal tale-til-tekst og redigerbart referatutkast.\n- Standard referatmal med kontrollpunkter før PDF-eksport.\n- Lagring og åpning av møteprosjekter.\n- Første Android-APK.\n\n### Nedlasting\nLast ned RodeReferat-Android.apk under Assets. Appen trenger mikrofontillatelse ved møteopptak.\n\nReferatet skal alltid kontrolleres før det brukes eller eksporteres.\n\nLaget av Julian Nordli."},{"tag":"v1.1.0","name":"RødeReferat v1.1.0","body":"### Nytt i denne versjonen\n- Automatisert flyten fra møteopptak til referatutkast.\n- Når opptaket stoppes, starter transkripsjonen automatisk.\n- Referatutkastet åpnes automatisk når transkripsjonen er ferdig.\n- Manuell kontroll er fortsatt påkrevd før PDF-eksport.\n- Oppdatert Android-APK.\n\n### Nedlasting\nLast ned RodeReferat-Android.apk under Assets. Appen trenger mikrofontillatelse ved møteopptak.\n\nLaget av Julian Nordli."},{"tag":"v1.2.0","name":"RødeReferat v1.2.0","body":"### Nytt i denne versjonen\n- Valgfritt Blålys-tema med mørk blå bakgrunn og høy kontrast.\n- Temavalget huskes på enheten.\n- Oppdatert Android-APK.\n\n### Nedlasting\nLast ned RodeReferat-Android.apk under Assets. Appen trenger mikrofontillatelse ved møteopptak.\n\nLaget av Julian Nordli."},{"tag":"v2.1.0","name":"URKH v2.1.0","body":"### Nytt i denne versjonen\n- Appnavnet ble endret fra RødeReferat til URKH.\n- GitHub-prosjektet fikk navnet URKH-HOVED.\n- Ny hovedside med valg mellom Møtereferat og Korpsbrev.\n- Direkte tilgang til Android-nedlasting.\n- Møtereferat, automatisk transkripsjon, Blålys-tema og PDF ble videreført.\n\n### Nedlasting\nLast ned URKH-Android.apk under Assets. Appen trenger mikrofontillatelse ved møteopptak.\n\nLaget av Julian Nordli."},{"tag":"v2.1.1","name":"URKH v2.1.1","body":"### Rettet i denne versjonen\n- Korpsbrev åpner riktig fra URKH-hovedsiden.\n- GitHub Pages ble aktivert for Korpsbrev.\n- En korrekt startside ble lagt til i Korpsbrev-prosjektet.\n- Oppdatert Android-APK.\n\n### Nedlasting\nLast ned URKH-Android.apk under Assets.\n\nLaget av Julian Nordli."},{"tag":"v2.1.2","name":"URKH v2.1.2","body":"### Rettet i denne versjonen\n- Skjulte det tekniske «Choose File»-feltet som ved en feil ble vist nederst.\n- «Åpne prosjekt» fungerer fortsatt og åpner filvelgeren først når knappen trykkes.\n- Oppdatert Android-APK.\n\n### Nedlasting\nLast ned URKH-Android.apk under Assets.\n\nLaget av Julian Nordli."},{"tag":"v2.2.0","name":"URKH v2.2.0","body":"### Nytt i denne versjonen\n- Lokalrådsreferat kan lages uten møteopptak.\n- Ny knapp «Lag referat uten opptak».\n- Diskusjon, vedtak, ansvarlig og frist kan fylles direkte.\n- Samme kontrollpunkter og PDF-eksport som automatiske referater.\n- Oppdatert Android-APK.\n\n### Nedlasting\nLast ned URKH-Android.apk under Assets.\n\nLaget av Julian Nordli."},{"tag":"v2.3.0","name":"URKH v2.3.0","body":"### Nytt i denne versjonen\n- URKH kan installeres fra Safari som nettapp på iPhone og iPad.\n- Eget Apple-ikon og installasjonsveiledning.\n- iOS-kildeprosjekt for Xcode lagt ved.\n- Android-APK videreført.\n\n### Nedlasting\n- URKH-Android.apk – installasjonsfil for Android.\n- URKH-iPhone-kildekode.zip – kildekode for bygging i Xcode. Ferdig IPA krever Apples signering.\n\nLaget av Julian Nordli."},{"tag":"v2.4.0","name":"URKH v2.4.0","body":"### Nytt i denne versjonen\n- Egen modul for møteinnkalling.\n- Felter for møtetittel, dato, tid, sted, mottakere, innledning, saksliste, praktisk informasjon, svarfrist og kontaktperson.\n- Automatisk forhåndsvisning og lagring av siste utkast.\n- Kopiering som tekst og eksport til PDF.\n- GitHub Releases opprettes nå automatisk ved nye versjoner.\n- Android-APK og iPhone-kildepakke bygges og legges ved automatisk.\n\n### Nedlasting\n- URKH-Android.apk – installasjonsfil for Android.\n- URKH-iPhone-kildekode.zip – kildekode for bygging i Xcode. Ferdig IPA krever Apples signering.\n\nAppen trenger mikrofontillatelse ved møteopptak. Referater skal alltid kontrolleres før de brukes eller eksporteres.\n\nLaget av Julian Nordli."}];
-            for (const item of releases) {
-              const { data: release } = await github.rest.repos.getReleaseByTag({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                tag: item.tag
-              });
-              await github.rest.repos.updateRelease({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                release_id: release.id,
-                name: item.name,
-                body: item.body
-              });
-              core.info(`Oppdatert ${item.tag}`);
-            }
