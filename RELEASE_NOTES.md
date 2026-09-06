@@ -1,3 +1,8 @@
+### Nytt i versjon 2.5.0
+- Ny klikkbar systemstatus på hovedsiden.
+- Kontrollerer nettilgang, lokal lagring, appversjon, opptaksstøtte og offline-støtte.
+- Statussjekken kjører lokalt og laster ikke opp møteinnhold.
+
 ### Nytt i denne versjonen
 - Egen modul for møteinnkalling.
 - Felter for møtetittel, dato, tid, sted, mottakere, innledning, saksliste, praktisk informasjon, svarfrist og kontaktperson.
