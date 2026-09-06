@@ -1,0 +1,12 @@
+changelog:
+  categories:
+    - title: Nye funksjoner
+      labels: [feature, enhancement]
+    - title: Feilrettinger
+      labels: [bug, fix]
+    - title: Sikkerhet
+      labels: [security]
+    - title: Dokumentasjon og vedlikehold
+      labels: [documentation, maintenance, dependencies]
+    - title: Andre endringer
+      labels: ["*"]
