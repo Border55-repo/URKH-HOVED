@@ -1,0 +1,34 @@
+name: Framework-kontroll
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Kontroller versjon og release-notater
+        shell: bash
+        run: |
+          version="$(tr -d '[:space:]' < VERSION)"
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          test -s RELEASE_NOTES.md
+      - name: Kontroller JavaScript
+        run: |
+          node --check app.js
+          node --check service-worker.js
+          node --check transcription-worker.js
+      - name: Kontroller plattformfiler
+        run: |
+          test -f android/app/build.gradle
+          test -f ios/project.yml
