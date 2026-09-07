@@ -1,4 +1,5 @@
 ### Nytt i denne versjonen
+- Sentral vedlikeholdsmodus kan nå aktiveres fra kontrollpanelet for alle eller utvalgte apper.
 - Egen modul for møteinnkalling.
 - Felter for møtetittel, dato, tid, sted, mottakere, innledning, saksliste, praktisk informasjon, svarfrist og kontaktperson.
 - Automatisk forhåndsvisning og lagring av siste utkast.
