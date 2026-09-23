@@ -1,1 +1,10 @@
-const CACHE='urkh-v2.4.1';const FILES=['./','index.html','styles.css','app.js','maintenance-mode.js','transcription-worker.js','manifest.webmanifest','logo.png','icon-192.png','icon-512.png'];self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES))));self.addEventListener('activate',e=>e.waitUntil(Promise.all([self.clients.claim(),caches.keys().then(xs=>Promise.all(xs.filter(x=>x!==CACHE).map(x=>caches.delete(x))))])));self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.match(e.request).then(x=>x||fetch(e.request).then(r=>{if(new URL(e.request.url).origin===location.origin){const q=r.clone();caches.open(CACHE).then(c=>c.put(e.request,q))}return r})))})
+self.addEventListener("install", event => { self.skipWaiting(); });
+self.addEventListener("activate", event => {
+  event.waitUntil((async () => {
+    for (const key of await caches.keys()) await caches.delete(key);
+    await self.registration.unregister();
+    const clients = await self.clients.matchAll({ type: "window" });
+    for (const client of clients) client.navigate(client.url);
+  })());
+});
+self.addEventListener("fetch", () => {});
