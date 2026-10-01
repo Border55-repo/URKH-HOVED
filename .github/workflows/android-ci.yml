@@ -36,7 +36,7 @@ jobs:
           gradle-version: "9.6.0"
       - name: Bygg debug-APK
         run: gradle -p android assembleDebug
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: URKH-Android-debug-${{ github.sha }}
           path: android/app/build/outputs/apk/debug/app-debug.apk
